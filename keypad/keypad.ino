@@ -1,3 +1,6 @@
+#include <Key.h>
+#include <Keypad.h>
+
 #include <Keypad.h>
 
 const int ROW_NUM = 4; //four rows
@@ -6,8 +9,8 @@ const int COLUMN_NUM = 4; //four columns
 char keys[ROW_NUM][COLUMN_NUM] = {
   {'1','2','3', 'A'},
   {'4','5','6', 'B'},
-  {'7','8','9', 'C'},
-  {'*','0','#', 'D'}
+  {'7','8','E', 'C'},
+  {'H','G','F', 'D'}
 };
 
 
