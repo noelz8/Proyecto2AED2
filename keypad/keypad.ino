@@ -3,8 +3,8 @@
 
 #include <Keypad.h>
 
-const int ROW_NUM = 4; //four rows
-const int COLUMN_NUM = 4; //four columns
+const int ROW_NUM = 4; //cuatro filas
+const int COLUMN_NUM = 4; //cuatro columnas
 
 char keys[ROW_NUM][COLUMN_NUM] = {
   {'1','2','3', 'A'},
@@ -15,8 +15,8 @@ char keys[ROW_NUM][COLUMN_NUM] = {
 
 
 
-byte pin_rows[ROW_NUM] = {9, 8, 7, 6}; //connect to the row pinouts of the keypad
-byte pin_column[COLUMN_NUM] = {5, 4, 3, 2}; //connect to the column pinouts of the keypad
+byte pin_rows[ROW_NUM] = {9, 8, 7, 6}; //conectar las filas a los pines del keypad
+byte pin_column[COLUMN_NUM] = {5, 4, 3, 2}; //conectar las columnas a los pines del keypad
 
 Keypad keypad = Keypad( makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM );
 
