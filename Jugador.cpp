@@ -15,7 +15,7 @@ void clearScreen();
 void triggerEndGame();
 
 /**
- * Obtiene un movimeinto preguntandole al jugador que quiere hacer.
+ * Obtiene un movimiento preguntandole al jugador que quiere hacer.
  * @param board El tablero donde se aplicara el movimiento
  * @return Devuelve el tablero modificado con el movimiento indicado por el jugador
  */
@@ -43,12 +43,11 @@ void HumanPlayer::getMove(Board& board)
             std::cout << "Esa pieza no puede moverse, por favor seleccione otra:" << '\n';
         else
         {
-            // Le ensena al usuario posbiles movimientos y le pide que escoga uno
+            // Le enseña al usuario posbiles movimientos y le pide que escoga uno
             displayBoard(board, possibleMoves);
             move_ptr_t move = getMoveFromUser(possibleMoves);
             
-            // apply move to board and return it if the user entered a valid one
-            // OTHERWISE, the user requested a retry, so loop again
+            // aplica el movimiento al tablero
             if (move != nullptr)
             {
                 board.applyMoveToBoard(move, pieceMoving);
@@ -59,47 +58,47 @@ void HumanPlayer::getMove(Board& board)
 }
     
 /**
- * Responsible for displaying the game board to the user (optionally with possible moves)
- * @param board The board to be displayed
- * @param possibleMoves An optional std::vector of possible moves to display while printing the board.
- * The board will display as normal if this is null.
+ * Responsable de mostrar los movimientos posibles al usario
+ * @param El tablero que se mostrara
+ * @param possibleMoves
+ * El tablero se mostrara normalmente aunque el movimiento sea nulo.
  */
 void HumanPlayer::displayBoard(const Board& board, const moves_t possibleMoves)
 {
-    // clear the screen for board display
+    // limpia la pantalla para mostrar el tablero
     clearScreen();
     
-    // include a hidden top row for coordinates
+   
     for (int y = -1; y < Board::SIZE; y++)
     {   
-        // include a hidden left column for coordinates
+        
         for (int x = -1; x < Board::SIZE; x++)
         {
-            // add an exception for the top row (print letter coordinates)
+          
             if (y == -1) 
             {
-                if (x != -1) // skip hidden column
-                    // print a letter, starting with capital a, for each x value
+                if (x != -1) 
+                  
                     std::cout << "-" << (char)(x + 65) << "- ";
                 else
-                    std::cout << "     "; // still fill the place we skipped
+                    std::cout << "     "; 
             }
-            // add an exception for the left column (print number coordinates)
+         
             else if (x == -1)
             {
-                if (y != -1) // skip hidden row
-                    // print a number, starting with one, for each y value
+                if (y != -1)
+                   
                     std::cout << "-" << y + 1 << "- ";
             }
             else
             {
-                // get piece here (possibly null)
+                // Obtiene la pieza a mover
                 Piece* thisPiece = board.getValueAt(x, y);
                 
-                // if there are any, loop over the possible moves and see if any end at this space
+                // Si hay una se mueve entre todos los moviemientos disponibles
                 if (!possibleMoves.empty())
                 {
-                    // use to determine whether to continue and skip printing other things
+                    
                     bool moveFound = false;
                     
                     for (unsigned int i = 0; i < possibleMoves.size(); i++)
@@ -107,21 +106,21 @@ void HumanPlayer::displayBoard(const Board& board, const moves_t possibleMoves)
                         coords_t move = possibleMoves[i]->getEndingPosition();
                         if (move[0] == x && move[1] == y)
                         {
-                            // if one here, put the list index (one-indexed) here as a char
+                          
                             std::cout << "| " << i+1 << " ";
                             moveFound = true;
                         }
                     }
                     
-                    // if a move is found here, skip our other possible printings
+                
                     if (moveFound)
                         continue;
                 }
              
-                // if the piece at this location exists, print it with a bar for cosmetics
+              
                 if (thisPiece != nullptr)
                     std::cout << "| " << thisPiece->getString();
-                // print out dots (black places) at checkerboard spaces
+              
                 else if (board.isCheckerboardSpace(x, y))
                     std::cout << "| . ";
                 else
@@ -133,25 +132,25 @@ void HumanPlayer::displayBoard(const Board& board, const moves_t possibleMoves)
 }
 
 /**
- * Responsible for displaying the game board to the user (WITHOUT possible moves)
- * @param board The board to be displayed
+ * Se encarga de mostrar el tablero
+ * @param board El tablero que se mostrara
  */
 void HumanPlayer::displayBoard(const Board& board)
 {
-	// emptyPossibleMoves will never change now, but that's okay
+	
 	static moves_t emptyPossibleMoves(0);
 	displayBoard(board, emptyPossibleMoves);
 }
 
 /**
- * Asks the user for a piece on the board (for them to move),
- * and ensures it is an actual piece of the correct color
- * @param board The board to check against
- * @return The Piece object to be returned (will be an actual piece)
+ * Le pide al usuario una pieza en el tablero
+ * y se asegura que sea una pieza del mismo color
+ * @param board el tablero que se revisara
+ * @return 
  */
 Piece* HumanPlayer::getPieceFromUser(const Board& board)
 {
-    // keep trying again until we get a valid peice chosen
+    // Se repite hasta que se obtenga una pieza valida
     while (true)
     {       
         using namespace std;
@@ -162,48 +161,48 @@ Piece* HumanPlayer::getPieceFromUser(const Board& board)
         try
         {
             getline(cin, raw);
-            // TODO: To lower case
+           
             
-            // allow user to exit
+         
             if (raw == "exit")
             {
                 triggerEndGame();
                 return nullptr;
             }
-            // ensure a valid coordinate input
+            // se asegura que la coordenada este bien escrita
             else if (raw.length() < 2)
                 throw ("Porfavor ingrese un coordenada de la forma'[letra][numero]'.");
                 
-            // Presume that the user entered the letter coordinate first, but flip them if it's the other way around
+            
             char letterChar = raw[0];
             char numberChar = raw[1];
-            if (isdigit(letterChar)) // the letter is actually a number...
+            if (isdigit(letterChar)) 
             {
                 letterChar = numberChar;
                 numberChar = raw[0];
             }   
                             
-            // get coordinates by shifting the corresponding character to its numeric value (0-indexed)
+          
             int x = letterChar - 97;
             int y = numberChar - 48 - 1;
 
-            // ensure there's no out-of-bounds entries 
+          
             if (board.isOverEdge(x, y))
                 throw ("Porfavor ingrese una coordenada");              
             
-            // now get the actual piece there
+         
             Piece* userPiece = board.getValueAt(x, y);
             
-            // and see if it is valid (isn't null and is this player's color)
+          
             if (userPiece == nullptr)
                 cout << "No hay una pieza en ese lugar!\n" << '\n';
             else if (userPiece->isWhite != this->isWhite)
                 cout << "Esa no es su pieza!\n" << '\n';
-            // if successful, make sure not to return a local variable 
+          
             else
                 return board.getValueAt(x, y); 
         }
-        catch (const char* e) // catch incorrect parse or our throw exception
+        catch (const char* e) 
         {
            cout << e << '\n';
            cin.ignore(32767, '\n');
@@ -213,16 +212,16 @@ Piece* HumanPlayer::getPieceFromUser(const Board& board)
 }
     
 /**
- * Asks the user for a number representing a move of a particular piece,
- * checking that it is an available move. (The user should be shown all moves beforehand)
- * @param possibleMoves The list of possible moves the user can request
- * @return The Move object representing the chosen move (may be null if the user chooses to get a new piece)
+ * Le pide al usuario un numero el cual representa un movimiento
+ * previamente se verifica que el movimiento sea valido
+ * @param possibleMoves La lista de posibles movimientos
+ * @return 
  */
 move_ptr_t HumanPlayer::getMoveFromUser(const moves_t possibleMoves)
 {
     int moveNum;
     
-    // keep trying again until we get a valid move chosen
+   
     while (true)
     {   
     	using namespace std;
@@ -232,24 +231,23 @@ move_ptr_t HumanPlayer::getMoveFromUser(const moves_t possibleMoves)
         {
             cin >> moveNum;
             
-            // ensure correct parse
+          
             if (!cin.good())
             	throw ("Ingrese un numero.");
-            // ensure they enter a move that we printed
+          
             else if (moveNum > possibleMoves.size())
                 throw ("Por favor ingrese uno de los numeros en el tablero, o 0 para salir.");
-            // allow user to quit back to another piece by entering 0
+          
             else if (moveNum == 0)
                 return nullptr;  
 
-			// make sure cin is clean for the next input
+			/
            cin.ignore(32767, '\n');
 	                           
-            // return the move the user entered (switch to 0-indexed), once we get a valid entry
+            
             return possibleMoves[moveNum - 1];
         }
-        catch (const char* e) // catch incorrect parse or our throw exception
-        {
+        catch (const char* e) 
            cout << e << '\n';
            cin.ignore(32767, '\n');
            cin.clear();
@@ -258,7 +256,7 @@ move_ptr_t HumanPlayer::getMoveFromUser(const moves_t possibleMoves)
 }
     
 /**
- * @return Returns a titlecase string representing this player's color
+ * @return
  */
 std::string HumanPlayer::getColor()
 {
