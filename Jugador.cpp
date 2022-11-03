@@ -44,6 +44,7 @@ void HumanPlayer::getMove(Board& board)
         else
         {
             // Le ensena al usuario posbiles movimientos y le pide que escoga uno
+		displayBoard(board, possibleMoves);
             move_ptr_t move = getMoveFromUser(possibleMoves);
             
             // apply move to board and return it if the user entered a valid one
