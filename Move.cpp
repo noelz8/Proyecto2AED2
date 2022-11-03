@@ -5,7 +5,7 @@
 #include "Typedefs.h"
 
 /**
- * @return Returns a two-part array representing the coordinates of this move's starting position.
+ * @return Returns un array que representa las coordenadas iniciales del movimiento
  */
 coords_t Move::getStartingPosition() const
 {
@@ -16,7 +16,7 @@ coords_t Move::getStartingPosition() const
 }
 
 /**
- * @return Returns a two-part array representing the coordinates of this move's ending position.
+ * @return Returns un array con las coordenadas finales del movimiento
  */
 coords_t Move::getEndingPosition() const
 {
@@ -27,38 +27,34 @@ coords_t Move::getEndingPosition() const
 }
     
 /**
- * Finds the pieces jumped in this move.
- * (Get's inbetween jumps using recursion)
- * @return Returns an array of pieces that were jumped.
- * @param board The board to look for the pieces on.
+ * @return Returns 
+ * @param board el tablero en el que se buscaran las piezas
  */
 std::vector<Piece*> Move::getJumpedPieces(const Board& board) const
 {
-	// create expandable list of all pieces
+	
     std::vector<Piece*> pieces(0);
     
-    // if this move wasn't a jump, it didn't jump a piece!
+  !
     if (isJump)
     {
-        // the piece this move is jumping should be between the start and end of this move
-        // (the average of those two positions)
         int pieceX = (x1 + x2)/2;
         int pieceY = (y1 + y2)/2;
         
-        // add this most recent jump...
+     
         pieces.push_back(board.getValueAt(pieceX, pieceY));
         
-        // ...but also go back to get the inbetween ones (if we're not the first move)
+    
         if (precedingMove != nullptr)
         {
             std::vector<Piece*> prevJumped = precedingMove->getJumpedPieces(board);
             pieces.insert(pieces.end(), prevJumped.begin(), prevJumped.end()); 
             
-            // something is wrong (a preceding move isn't a jump) if this returns null, so let the error be thrown
+        
         }
     }
     
-    // shorten and return
+ 
     pieces.shrink_to_fit();
     return pieces;
 }
