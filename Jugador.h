@@ -12,10 +12,8 @@ class Piece;
 #include <string>
 
 /**
- * Responsible for communicating with the human player and serving as an interface with the main game engine.
- * 
- * @author Mckenna Cisler
- * @version 5.18.2015
+ * Se encarga de comunicarse con el jugador.
+ *   
  */
 class HumanPlayer : public Player
 {
@@ -23,49 +21,44 @@ class HumanPlayer : public Player
 	    const bool isWhite;
 		
 		/**
-		 * Responsible for displaying the game board to the user (WITH possible moves)
-		 * @param board The board to be displayed
-		 * @param possibleMoves A vector of possible moves to display while printing the board.
+		 * Se encarga de mostrar el tablero con los posbiles movimientos
+		 * @param board The El tablero
+		 * @param possibleMoves un vector con los posibles movimientos a realizar
 		 */
 		void displayBoard(const Board& board, const moves_t possibleMoves);
 		
 		/**
-		 * Responsible for displaying the game board to the user (WITHOUT possible moves)
-		 * @param board The board to be displayed
+		 * Muestra el tablero al usuario
+		 * @param board el tablero
 		 */
 		void displayBoard(const Board& board);
 		
 		/**
-		 * Asks the user for a piece on the board (for them to move),
-		 * and ensures it is an actual piece of the correct color
-		 * @param board The board to check against
-		 * @return The Piece object to be returned (will be an actual piece)
+		 * le pide al usuario una pieza en el tablero,
+		 * y se asegura que sea del mismo color
+		 * @param board el tablero 
+		 * @return 
 		 */
 		Piece* getPieceFromUser(const Board& board);
 		
 		/**
-		 * Asks the user for a number representing a move of a particular piece,
-		 * checking that it is an available move. (The user should be shown all moves beforehand)
-		 * @param possibleMoves The list of possible moves the user can request
-		 * @return The Move object representing the chosen move (may be null if the user chooses to get a new piece)
+		 * le pide al usuario un numero el cual es un movimiento
+		 * y se asegura que sea un movimiento valido
+		 * @param possibleMoves la lista con los posibles movimientos
+		 * @return 
 		 */
 		move_ptr_t getMoveFromUser(const moves_t possibleMoves);
 		
-		/**
-		 * @return Returns a titlecase string representing this player's color
-		 */
+
 		std::string getColor();
 	    
 	public:
-		/**
-		 * Constructor for the HumanPlayer
-		 * @param isWhite Used to specify if this player is black or white.
-		 */
+		
 		HumanPlayer(bool isWhite) : isWhite(isWhite) {};
 		
 		/**
-		 * Gets a move, by asking the human player what move they want to do.
-		 * @param board The board to apply the move to (assumed to be oriented so that this player is on the top)
+		 * Obtiene un movimiento preguntandole al usuario que movimiento desea realizar
+		 * @param board el tablero en el cual se aplicara el movimiento
 		 */
 		virtual void getMove(Board& board);
 };
