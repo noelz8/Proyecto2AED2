@@ -10,41 +10,40 @@
 #include <iostream>
 #include <cassert>
 
-// forward declare utilities in main.cpp
+
 void clearScreen();
 void triggerEndGame();
 
 /**
- * Gets a move, by asking the human player what move they want to do.
- * @param board The board to apply the move to (assumed to be oriented so that this player is on the top)
- * @return Returns the board, modified according to the player's move
+ * Obtiene un movimeinto preguntandole al jugador que quiere hacer.
+ * @param board El tablero donde se aplicara el movimiento
+ * @return Devuelve el tablero modificado con el movimiento indicado por el jugador
  */
 void HumanPlayer::getMove(Board& board)
 {        
-    // display board to help user (without possible moves)
+    // Muestra el tablero para ayudar al jugador
     displayBoard(board);
     
-    // keep asking until they select a piece with a valid move
+    // Pregunta hasta que se ingrese un movimiento valido
     moves_t possibleMoves;
     while (true)
     {
-        // ask user for a piece
+        // Le pide al jugador una ficha
         Piece* pieceMoving = getPieceFromUser(board);
                     
         // check for quit
         if (pieceMoving == nullptr)
             return;
         
-        // find all possible moves the player could do
+        // encuentra todos los movimientos que puede hacer el jugador
         possibleMoves = pieceMoving->getAllPossibleMoves(board);
         
-        // check that there are some, and if so continue to ask for move
+       
         if (possibleMoves.empty())
-            std::cout << "That piece has no possible moves! Please choose another:" << '\n';
+            std::cout << "Esa pieza no puede moverse, por favor seleccione otra:" << '\n';
         else
         {
-            // show the user possible moves and ask for one (user will enter a number)
-            displayBoard(board, possibleMoves);
+            // Le ensena al usuario posbiles movimientos y le pide que escoga uno
             move_ptr_t move = getMoveFromUser(possibleMoves);
             
             // apply move to board and return it if the user entered a valid one
@@ -158,7 +157,7 @@ Piece* HumanPlayer::getPieceFromUser(const Board& board)
         
         string raw;
         
-        cout << getColor() << ", please select a piece by its coordinates (i.e. A3):" << '\n';
+        cout << getColor() << ", indique las coordenadas de la pieza a mover:" << '\n';
         try
         {
             getline(cin, raw);
@@ -172,7 +171,7 @@ Piece* HumanPlayer::getPieceFromUser(const Board& board)
             }
             // ensure a valid coordinate input
             else if (raw.length() < 2)
-                throw ("Please enter a coordinate on the board in the form '[letter][number]'.");
+                throw ("Porfavor ingrese un coordenada de la forma'[letra][numero]'.");
                 
             // Presume that the user entered the letter coordinate first, but flip them if it's the other way around
             char letterChar = raw[0];
@@ -189,16 +188,16 @@ Piece* HumanPlayer::getPieceFromUser(const Board& board)
 
             // ensure there's no out-of-bounds entries 
             if (board.isOverEdge(x, y))
-                throw ("Please enter a coordinate on the board");              
+                throw ("Porfavor ingrese una coordenada");              
             
             // now get the actual piece there
             Piece* userPiece = board.getValueAt(x, y);
             
             // and see if it is valid (isn't null and is this player's color)
             if (userPiece == nullptr)
-                cout << "There is no piece there!\n" << '\n';
+                cout << "No hay una pieza en ese lugar!\n" << '\n';
             else if (userPiece->isWhite != this->isWhite)
-                cout << "That's not your piece!\n" << '\n';
+                cout << "Esa no es su pieza!\n" << '\n';
             // if successful, make sure not to return a local variable 
             else
                 return board.getValueAt(x, y); 
@@ -227,17 +226,17 @@ move_ptr_t HumanPlayer::getMoveFromUser(const moves_t possibleMoves)
     {   
     	using namespace std;
     
-        cout << getColor() << ", please select a move the its number (enter 0 to go back): ";
+        cout << getColor() << ", porfavor seleccione un movimiento por el numero: ";
         try 
         {
             cin >> moveNum;
             
             // ensure correct parse
             if (!cin.good())
-            	throw ("Please enter a number.");
+            	throw ("Ingrese un numero.");
             // ensure they enter a move that we printed
             else if (moveNum > possibleMoves.size())
-                throw ("Please enter one of the numbers on the board, or 0 to exit.");
+                throw ("Por favor ingrese uno de los numeros en el tablero, o 0 para salir.");
             // allow user to quit back to another piece by entering 0
             else if (moveNum == 0)
                 return nullptr;  
@@ -262,5 +261,5 @@ move_ptr_t HumanPlayer::getMoveFromUser(const moves_t possibleMoves)
  */
 std::string HumanPlayer::getColor()
 {
-    return isWhite ? "White" : "Black";
+    return isWhite ? "Blanco" : "Negro";
 }

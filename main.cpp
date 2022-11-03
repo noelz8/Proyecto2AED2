@@ -1,7 +1,7 @@
 #include "Player.h"
-#include "AIPlayer.h"
-#include "HumanPlayer.h"
-#include "Board.h"
+#include "PC.h"
+#include "Jugador.h"
+#include "Tablero.h"
 #include "Piece.h"
 #include "Move.h"
 
@@ -49,12 +49,12 @@ bool askIfTwoPlayer()
 	
 	    // display message
 	    clearScreen();
-	    cout << "*******Welcome to checkers!*******\n" << '\n';
-	    cout << "Enter 'exit' to exit at any point (or 0 when moving a piece).\n" << '\n';
-	    cout << "We offer two game modes:"<< '\n';
-	    cout << "[1] 1 Player Mode (vs Computer) - EXPERIMENTAL" << '\n';
-	    cout << "[2] 2 Player Mode"<< '\n';
-	    cout << "\nWhich one would you like to play? Enter a number: " << '\n';
+	    cout << "*******Bienvenidos*******\n" << '\n';
+	    cout << "Ingrese 'exit' para salir en cualquier momento.\n" << '\n';
+	    cout << "Ingrese 1 para empezar a jugar:"<< '\n';
+	    //cout << "[1] 1 Player Mode (vs Computer) - EXPERIMENTAL" << '\n';
+	    //cout << "[2] 2 Player Mode"<< '\n';
+	    //cout << "\nWhich one would you like to play? Enter a number: " << '\n';
 
 	    // ask for string, but only accept "1" or "2"
 	    string response;
