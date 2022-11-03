@@ -1,15 +1,13 @@
-# the compiler:
+
 CC = g++
 
-# compiler flags:
-#  -g    adds debugging information to the executable file
-#  -Wall turns on most, but not all, compiler warnings
+
 CFLAGS=-std=c++11 #-g #-Wall
 
-# the build target executable:
+
 TARGET=checkers
 
-# the desired compile command
+
 COMM=-c
 
 # rules:
