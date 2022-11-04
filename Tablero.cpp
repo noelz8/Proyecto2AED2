@@ -109,9 +109,10 @@ coords_t Board::getCoordsFromPos(int position) const
 {
     coords_t coords;
     
-    /
+    
     coords[0] = position % SIZE;
     coords[1] = position / SIZE; 
+    return coords;
 }
     
 
@@ -124,7 +125,7 @@ int Board::getPosFromCoords(int x, int y) const
 
 bool Board::isCheckerboardSpace(int x, int y) const
 {
-   
+   return x % 2 == y % 2;
 }
     
 
