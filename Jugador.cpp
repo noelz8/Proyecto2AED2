@@ -241,13 +241,14 @@ move_ptr_t HumanPlayer::getMoveFromUser(const moves_t possibleMoves)
             else if (moveNum == 0)
                 return nullptr;  
 
-			/
+			
            cin.ignore(32767, '\n');
 	                           
             
             return possibleMoves[moveNum - 1];
         }
-        catch (const char* e) 
+        catch (const char* e)
+        {
            cout << e << '\n';
            cin.ignore(32767, '\n');
            cin.clear();

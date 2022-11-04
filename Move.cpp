@@ -35,7 +35,7 @@ std::vector<Piece*> Move::getJumpedPieces(const Board& board) const
 	
     std::vector<Piece*> pieces(0);
     
-  !
+  
     if (isJump)
     {
         int pieceX = (x1 + x2)/2;
