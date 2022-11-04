@@ -106,7 +106,7 @@ int main()
 	
 	Board board;
 
-	
+	Player* player1;
 	Player* player2;
 
 	if (askIfTwoPlayer())
